@@ -11,15 +11,12 @@ soup = BeautifulSoup(response.text, "html.parser")
 links = [link_tag.text for link_tag in soup.find_all("loc")]
 
 
-def get_episode_link(link):
-    if "episodes" in link:
-        return True
-    return False
+def is_episode_link(link):
+    return "episodes" in link
 
 
-episode_links = list(filter(get_episode_link, links))
+episode_links = list(filter(is_episode_link, links))
 
 df = pandas.Series(episode_links)
 
 df.to_csv("episode_links.csv")
-
