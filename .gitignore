@@ -1,1 +1,4 @@
 .venv
+chromedriver
+episode_dom.html
+pyrightconfig.json
