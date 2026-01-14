@@ -30,13 +30,13 @@ def _create_episode_chunks(episode):
     return episode_chunks
 
 
-def _ingest_files(file_name):
+def _ingest_file(file_name):
     df = pd.read_csv(f"{file_name}.csv")
     return df
 
 
 def _create_podcast_chunks(file_name):
-    df = _ingest_files(file_name)
+    df = _ingest_file(file_name)
     episodes = [row.to_dict() for _, row in df.iterrows()]
     podcast_chunks = []
     for episode in episodes:
