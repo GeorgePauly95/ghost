@@ -51,7 +51,7 @@ def _ingest_file(file_name):
     return df
 
 
-def _create_podcast_chunks(file_name):
+def create_podcast_chunks(file_name):
     df = _ingest_file(file_name)
     episodes = [row.to_dict() for _, row in df.iterrows()]
     podcast_chunks = []
