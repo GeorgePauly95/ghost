@@ -2,3 +2,7 @@
 chromedriver
 episode_dom.html
 pyrightconfig.json
+dbname=ghost
+user=george
+__pycache__/
+.env
