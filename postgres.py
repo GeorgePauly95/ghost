@@ -2,7 +2,6 @@ import psycopg
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from embedding import create_embedded_episode_chunks, create_query_embedding
 
 load_dotenv()
 
