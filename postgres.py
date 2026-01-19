@@ -2,7 +2,7 @@ import psycopg
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from embedding import create_embedded_episode_chunks
+from embedding import create_embedded_episode_chunks, create_query_embedding
 
 load_dotenv()
 
@@ -37,3 +37,24 @@ class Postgres:
                 ),
             )
             self.conn.commit()
+
+    def text_search(self, text):
+        with self.conn.cursor() as cur:
+            cur.execute(
+                """
+                    SELECT * FROM episodes WHERE to_tsvector('english', text_to_embed)
+                    @@ websearch_to_tsquery('english', %s);
+                """,
+                (text,),
+            )
+            return cur.fetchall()
+
+    def embedding_search(self, embedding):
+        with self.conn.cursor() as cur:
+            cur.execute(
+                """
+                    SELECT * FROM episodes ORDER BY text_embedding <=> (%s)::halfvec LIMIT 5
+                """,
+                (embedding,),
+            )
+            return cur.fetchall()
