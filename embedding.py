@@ -5,7 +5,7 @@ from chunking import create_podcast_chunks
 
 load_dotenv()
 
-podcast_name = "seenunseen"
+podcast_name = os.getenv("podcast_name")
 embedding_model = os.getenv("embedding_model")
 
 
