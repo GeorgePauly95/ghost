@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS episodes (
   title TEXT NOT NULL,
   episode_number NUMERIC(10,2),
   date TIMESTAMPTZ,
+  sitemap_date TIMESTAMPTZ,
   text_to_embed TEXT,
   text_embedding HALFVEC(2560)
 );
