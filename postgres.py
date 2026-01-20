@@ -41,7 +41,7 @@ class Postgres:
         with self.conn.cursor() as cur:
             cur.execute(
                 """
-                    SELECT * FROM episodes WHERE to_tsvector('english', text_to_embed)
+                    SELECT text_to_embed FROM episodes WHERE to_tsvector('english', text_to_embed)
                     @@ websearch_to_tsquery('english', %s);
                 """,
                 (text,),
@@ -52,7 +52,7 @@ class Postgres:
         with self.conn.cursor() as cur:
             cur.execute(
                 """
-                    SELECT * FROM episodes ORDER BY text_embedding <=> (%s)::halfvec LIMIT 5
+                    SELECT text_to_embed FROM episodes ORDER BY text_embedding <=> (%s)::halfvec LIMIT 5
                 """,
                 (embedding,),
             )
