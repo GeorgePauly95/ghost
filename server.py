@@ -11,7 +11,8 @@ pg = Postgres()
 load_dotenv()
 
 openrouter_api_key = os.getenv("openrouter_api_key")
-openrouter_model = os.getenv("openrouter_model")
+openrouter_llm_model = os.getenv("openrouter_llm_model")
+local_llm_model = os.getenv("local_llm_model")
 
 
 def create_context(query):
@@ -33,7 +34,7 @@ def generate_response_local(query):
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": query},
     ]
-    response = ollama.chat(model=os.getenv("llm_model"), messages=messages)
+    response = ollama.chat(model=local_llm_model, messages=messages)
     return response.message.content
 
 
@@ -59,7 +60,7 @@ def generate_response_openrouter(query):
         },
         data=json.dumps(
             {
-                "model": openrouter_model,  # Optional
+                "model": openrouter_llm_model,  # Optional
                 "messages": messages,
             }
         ),
