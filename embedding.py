@@ -29,7 +29,7 @@ def create_embedded_podcast_chunks(podcast_name):
 
 
 def create_embedded_episode_chunks(podcast_name):
-    episode_chunks = create_podcast_chunks(podcast_name)[7]
+    episode_chunks = create_podcast_chunks(podcast_name)[8]
     episode_text_to_be_embedded = episode_chunks.get("text_to_embed")
     episode_text_embeddings_object = ollama.embed(
         model=embedding_model, input=episode_text_to_be_embedded

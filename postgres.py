@@ -2,6 +2,7 @@ import psycopg
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from embedding import create_embedded_episode_chunks, create_query_embedding
 
 load_dotenv()
 
@@ -36,6 +37,15 @@ class Postgres:
                 ),
             )
             self.conn.commit()
+
+    def get_all_episodes(self):
+        with self.conn.cursor() as cur:
+            episodes = cur.execute("SELECT DISTINCT link, sitemap_date FROM episodes;")
+            episodes = episodes.fetchall()
+            episodes = [
+                {"link": episode[0], "sitemap_date": episode[1]} for episode in episodes
+            ]
+            return episodes
 
     def text_search(self, text):
         with self.conn.cursor() as cur:
