@@ -2,7 +2,6 @@ import psycopg
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from embedding import create_embedded_episode_chunks, create_query_embedding
 
 load_dotenv()
 
@@ -47,6 +46,14 @@ class Postgres:
             ]
             return episodes
 
+    def delete_episodes(self, episodes):
+        with self.conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM episodes WHERE link = ANY(%s)",
+                (episodes,),
+            )
+            self.conn.commit()
+
     def text_search(self, text):
         with self.conn.cursor() as cur:
             cur.execute(
@@ -62,7 +69,7 @@ class Postgres:
         with self.conn.cursor() as cur:
             cur.execute(
                 """
-                    SELECT text_to_embed FROM episodes ORDER BY text_embedding <=> (%s)::halfvec LIMIT 5
+                    SELECT text_to_embed FROM episodes ORDER BY text_embedding <=> (%s)::halfvec LIMIT 15
                 """,
                 (embedding,),
             )
