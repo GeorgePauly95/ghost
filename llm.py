@@ -19,7 +19,10 @@ def create_context(query):
     query_text_search_context = pg.text_search(query)
     query_embedding = create_query_embedding(query)
     query_embedding_search_context = pg.embedding_search(query_embedding)
-    return query_text_search_context + query_embedding_search_context
+    context = query_text_search_context + query_embedding_search_context
+    print(f"Text Search Context: {query_text_search_context}")
+    print(f"Embedding Search Context: {query_embedding_search_context}")
+    return context
 
 
 def generate_response_local(query):
@@ -50,6 +53,7 @@ def generate_response_openrouter(query):
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": query},
     ]
+
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
