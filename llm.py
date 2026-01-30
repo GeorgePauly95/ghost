@@ -20,8 +20,6 @@ def create_context(query):
     query_embedding = create_query_embedding(query)
     query_embedding_search_context = pg.embedding_search(query_embedding)
     context = query_text_search_context + query_embedding_search_context
-    print(f"Text Search Context: {query_text_search_context}")
-    print(f"Embedding Search Context: {query_embedding_search_context}")
     return context
 
 
@@ -64,7 +62,7 @@ def generate_response_openrouter(query):
         },
         data=json.dumps(
             {
-                "model": openrouter_llm_model,  # Optional
+                "model": openrouter_llm_model,
                 "messages": messages,
             }
         ),
