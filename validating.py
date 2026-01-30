@@ -12,10 +12,3 @@ def validate_episodes(db, episodes):
             if episode["sitemap_date"] > stored_episodes[episode["url"]]:
                 modified_urls.append(episode["url"])
     return {"new_urls": new_urls, "modified_urls": modified_urls}
-
-
-def update_stored_episodes(db, validated_episodes):
-    modified_episodes = validated_episodes["modified_urls"]
-    db.delete_episodes(modified_episodes)
-    episodes_to_crawl = modified_episodes + validated_episodes["new_urls"]
-    return
