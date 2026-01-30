@@ -1,6 +1,8 @@
 from llm import generate_response_openrouter
 from utils import format_openrouter_response
+from sync import sync
 
+sync()
 
 while True:
     query = input("\n\nWhat can I help with?\n\n")
